@@ -1061,14 +1061,14 @@ No automated test. Verify visually via dev server.
 
 /* ─── Theme tokens ─────────────────────────────────────────── */
 :root {
-  --color-bg: #ffffff;
-  --color-surface: #f6f8fa;
-  --color-surface-2: #eaeef2;
-  --color-border: #d0d7de;
-  --color-text: #1f2328;
-  --color-text-muted: #656d76;
-  --color-accent: #1f883d;
-  --color-accent-hover: #1a7f37;
+  --bg: #ffffff;
+  --surface: #f6f8fa;
+  --surface-2: #eaeef2;
+  --border: #d0d7de;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --accent: #1f883d;
+  --accent-hover: #1a7f37;
 
   /* Contribution chart levels — light mode */
   --level-0: #ebedf0;
@@ -1080,14 +1080,14 @@ No automated test. Verify visually via dev server.
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #0d1117;
-    --color-surface: #161b22;
-    --color-surface-2: #21262d;
-    --color-border: #30363d;
-    --color-text: #e6edf3;
-    --color-text-muted: #8b949e;
-    --color-accent: #3fb950;
-    --color-accent-hover: #56d364;
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-2: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #3fb950;
+    --accent-hover: #56d364;
 
     /* Contribution chart levels — dark mode */
     --level-0: #161b22;
@@ -1096,6 +1096,17 @@ No automated test. Verify visually via dev server.
     --level-3: #26a641;
     --level-4: #39d353;
   }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
 }
 
 /* ─── Base ──────────────────────────────────────────────────── */
@@ -1107,8 +1118,8 @@ No automated test. Verify visually via dev server.
 
 body {
   margin: 0;
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--bg);
+  color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
@@ -1456,7 +1467,7 @@ export function ProfileCard() {
 
   if (isError || !data) {
     return (
-      <div className="p-6 text-center" style={{ color: 'var(--color-text-muted)' }}>
+      <div className="p-6 text-center text-text-muted">
         <p>Failed to load profile. Please try again.</p>
       </div>
     )
@@ -1471,21 +1482,20 @@ export function ProfileCard() {
           width={64}
           height={64}
           loading="lazy"
-          className="rounded-full border-2"
-          style={{ borderColor: 'var(--color-border)' }}
+          className="rounded-full border-2 border-border"
         />
         <div>
-          <h2 className="font-semibold text-base" style={{ color: 'var(--color-text)' }}>
+          <h2 className="font-semibold text-base text-text">
             {data.name}
           </h2>
-          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+          <p className="text-sm text-text-muted">
             @{data.login}
           </p>
         </div>
       </div>
 
       {data.bio && (
-        <p className="text-sm" style={{ color: 'var(--color-text)' }}>
+        <p className="text-sm text-text">
           {data.bio}
         </p>
       )}
@@ -1502,10 +1512,10 @@ export function ProfileCard() {
 function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div className="flex flex-col items-center">
-      <span className="font-semibold" style={{ color: 'var(--color-text)' }}>
+      <span className="font-semibold text-text">
         {value.toLocaleString()}
       </span>
-      <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+      <span className="text-xs text-text-muted">
         {label}
       </span>
     </div>
@@ -1612,15 +1622,10 @@ export function ContributionTooltip({ date, count }: ContributionTooltipProps) {
 
   return (
     <div
-      className="absolute z-10 bottom-full left-1/2 mb-2 px-2 py-1 rounded text-xs whitespace-nowrap pointer-events-none"
-      style={{
-        transform: 'translateX(-50%)',
-        backgroundColor: 'var(--color-text)',
-        color: 'var(--color-bg)',
-      }}
+      className="absolute z-10 bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded text-xs whitespace-nowrap pointer-events-none bg-text text-bg"
     >
       <div className="font-medium">{label}</div>
-      <div style={{ color: 'var(--color-surface)' }}>{formatted}</div>
+      <div className="text-surface">{formatted}</div>
     </div>
   )
 }
@@ -1764,15 +1769,15 @@ export function ContributionChart() {
 
   return (
     <div className="p-6 flex flex-col gap-2">
-      <h3 className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>
+      <h3 className="text-sm font-semibold text-text">
         Contribution activity
       </h3>
 
       <div className="overflow-x-auto">
         {/* Month labels */}
         <div
-          className="flex text-xs mb-1"
-          style={{ color: 'var(--color-text-muted)', paddingLeft: 28 }}
+          className="flex text-xs mb-1 text-text-muted"
+          style={{ paddingLeft: 28 }}
         >
           {monthLabels.map(({ label, col }) => (
             <span
@@ -1786,7 +1791,7 @@ export function ContributionChart() {
 
         <div className="flex gap-0.5 relative" style={{ paddingTop: 20 }}>
           {/* Day-of-week labels */}
-          <div className="flex flex-col gap-0.5 mr-1 text-xs" style={{ color: 'var(--color-text-muted)' }}>
+          <div className="flex flex-col gap-0.5 mr-1 text-xs text-text-muted">
             {DAY_LABELS.map((label, i) => (
               <span key={i} style={{ height: 10, fontSize: 9, lineHeight: '10px' }}>
                 {label}
@@ -1810,8 +1815,7 @@ export function ContributionChart() {
 
         {/* Legend */}
         <div
-          className="flex items-center gap-1 mt-2 text-xs justify-end"
-          style={{ color: 'var(--color-text-muted)' }}
+          className="flex items-center gap-1 mt-2 text-xs justify-end text-text-muted"
         >
           <span>Less</span>
           {([0, 1, 2, 3, 4] as const).map(level => (
@@ -1966,12 +1970,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   return (
     <div className={`flex animate-slide-in-up ${isUser ? 'justify-end' : 'justify-start'}`}>
       <div
-        className="max-w-xs px-4 py-2 rounded-2xl text-sm"
-        style={
-          isUser
-            ? { backgroundColor: 'var(--color-accent)', color: '#ffffff' }
-            : { backgroundColor: 'var(--color-surface-2)', color: 'var(--color-text)' }
-        }
+        className={`max-w-xs px-4 py-2 rounded-2xl text-sm ${isUser ? 'bg-accent text-white' : 'bg-surface-2 text-text'}`}
       >
         <p style={{ margin: 0, lineHeight: 1.5 }}>{message.content}</p>
         <p
@@ -2063,22 +2062,13 @@ const DELAYS = [0, 150, 300]
 export function TypingIndicator() {
   return (
     <div className="flex justify-start">
-      <div
-        className="flex items-center gap-1 px-4 py-3 rounded-2xl"
-        style={{ backgroundColor: 'var(--color-surface-2)' }}
-      >
+      <div className="flex items-center gap-1 px-4 py-3 rounded-2xl bg-surface-2">
         {DELAYS.map((delay, i) => (
           <span
             key={i}
             data-testid="typing-dot"
-            className="animate-bounce-dot rounded-full"
-            style={{
-              width: 8,
-              height: 8,
-              backgroundColor: 'var(--color-text-muted)',
-              animationDelay: `${delay}ms`,
-              display: 'block',
-            }}
+            className="animate-bounce-dot rounded-full block w-2 h-2 bg-text-muted"
+            style={{ animationDelay: `${delay}ms` }}
           />
         ))}
       </div>
@@ -2203,10 +2193,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
   }
 
   return (
-    <div
-      className="flex items-center gap-2 px-4 py-3 border-t"
-      style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}
-    >
+    <div className="flex items-center gap-2 px-4 py-3 border-t border-border bg-surface">
       <input
         type="text"
         value={value}
@@ -2214,15 +2201,13 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
         onKeyDown={handleKeyDown}
         disabled={disabled}
         placeholder="Ask about this profile…"
-        className="flex-1 bg-transparent text-sm outline-none"
-        style={{ color: 'var(--color-text)' }}
+        className="flex-1 bg-transparent text-sm outline-none text-text"
       />
       <button
         onClick={submit}
         disabled={disabled}
         aria-label="Send message"
-        className="p-1.5 rounded-lg transition-opacity disabled:opacity-40"
-        style={{ backgroundColor: 'var(--color-accent)', color: '#ffffff' }}
+        className="p-1.5 rounded-lg transition-opacity disabled:opacity-40 bg-accent text-white"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <path d="M1.5 1.5l13 6.5-13 6.5V9.5l9-1.5-9-1.5V1.5z" />
@@ -2449,22 +2434,16 @@ export function ChatPanel() {
   const { messages, isTyping, sendMessage } = useChat(contributions)
 
   return (
-    <div
-      className="flex flex-col h-full"
-      style={{ backgroundColor: 'var(--color-bg)' }}
-    >
+    <div className="flex flex-col h-full bg-bg">
       {/* Header */}
-      <div
-        className="px-6 py-4 border-b font-semibold text-sm"
-        style={{ borderColor: 'var(--color-border)', color: 'var(--color-text)' }}
-      >
+      <div className="px-6 py-4 border-b border-border font-semibold text-sm text-text">
         Ask about this profile
       </div>
 
       {/* Messages or empty state */}
       {messages.length === 0 && !isTyping ? (
         <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6 py-10">
-          <p className="text-sm text-center" style={{ color: 'var(--color-text-muted)' }}>
+          <p className="text-sm text-center text-text-muted">
             Ask me anything about this GitHub profile and contribution history.
           </p>
           <div className="flex flex-col gap-2 w-full max-w-sm">
@@ -2472,12 +2451,7 @@ export function ChatPanel() {
               <button
                 key={s}
                 onClick={() => sendMessage(s)}
-                className="text-left px-4 py-2 rounded-xl text-sm border transition-colors"
-                style={{
-                  borderColor: 'var(--color-border)',
-                  color: 'var(--color-text)',
-                  backgroundColor: 'var(--color-surface)',
-                }}
+                className="text-left px-4 py-2 rounded-xl text-sm border transition-colors border-border text-text bg-surface"
               >
                 {s}
               </button>
@@ -2567,8 +2541,8 @@ Append to the end of `index.css`:
 
 .profile-panel {
   overflow-y: auto;
-  border-right: 1px solid var(--color-border);
-  background-color: var(--color-surface);
+  border-right: 1px solid var(--border);
+  background-color: var(--surface);
 }
 
 .chat-panel {
@@ -2586,7 +2560,7 @@ Append to the end of `index.css`:
 
   .profile-panel {
     border-right: none;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--border);
     max-height: 40dvh;
     overflow-y: auto;
     order: 2;
@@ -2671,22 +2645,22 @@ Append to `index.css`:
 ```css
 /* ─── Focus and interaction polish ──────────────────────────── */
 input:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 button:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 /* Smooth hover on suggestion chips */
 .suggestion-chip:hover {
-  background-color: var(--color-surface-2) !important;
-  border-color: var(--color-accent) !important;
-  color: var(--color-accent) !important;
+  background-color: var(--surface-2) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
 }
 
 /* Contribution chart column fade-in on load */
