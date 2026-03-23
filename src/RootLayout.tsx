@@ -1,9 +1,7 @@
 import { Outlet } from 'react-router-dom'
+import { useTheme } from './hooks/useTheme'
 
 export function RootLayout() {
-  return (
-    <div className="min-h-dvh bg-bg text-text">
-      <Outlet />
-    </div>
-  )
+  useTheme()
+  return <Outlet />
 }

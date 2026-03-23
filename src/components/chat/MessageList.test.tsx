@@ -1,10 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MessageList } from './MessageList';
-import type { Message } from '../../hooks/useChat';
-
-beforeAll(() => {
-  window.HTMLElement.prototype.scrollIntoView = () => {};
-});
+import type { Message } from '../../api/chat.types';
 
 const MESSAGES: Message[] = [
   { id: '1', role: 'user', content: 'First message', timestamp: new Date() },

@@ -1,1 +1,5 @@
-import '@testing-library/jest-dom/vitest'
+import '@testing-library/jest-dom/vitest';
+
+beforeAll(() => {
+  window.HTMLElement.prototype.scrollIntoView = () => {};
+});

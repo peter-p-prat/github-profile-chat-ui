@@ -1,4 +1,5 @@
-import { useState, type KeyboardEvent } from 'react';
+import { useRef, useState, type KeyboardEvent } from 'react';
+import { Send } from 'lucide-react';
 
 interface ChatInputProps {
   onSend: (content: string) => void;
@@ -7,14 +8,24 @@ interface ChatInputProps {
 
 export function ChatInput({ onSend, disabled }: ChatInputProps) {
   const [value, setValue] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = () => {
     if (!value.trim()) return;
     onSend(value.trim());
     setValue('');
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+    }
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value);
+    e.target.style.height = 'auto';
+    e.target.style.height = `${Math.min(e.target.scrollHeight, 120)}px`;
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
@@ -22,26 +33,35 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
   };
 
   return (
-    <div className="flex items-center gap-2 px-4 py-3 border-t border-border bg-surface">
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        disabled={disabled}
-        placeholder="Ask about this profile…"
-        className="flex-1 bg-transparent text-sm outline-none text-text"
-      />
-      <button
-        onClick={handleSubmit}
-        disabled={disabled}
-        aria-label="Send message"
-        className="p-1.5 rounded-lg transition-opacity disabled:opacity-40 bg-accent text-white"
+    <div className="p-4 border-t border-border shrink-0">
+      <div
+        className={`flex items-end gap-2 rounded-xl border border-border bg-surface p-2 transition-all duration-200 focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20`}
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M1.5 1.5l13 6.5-13 6.5V9.5l9-1.5-9-1.5V1.5z" />
-        </svg>
-      </button>
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          placeholder="Ask about this profile…"
+          rows={1}
+          disabled={disabled}
+          className="flex-1 resize-none bg-transparent text-[16px] text-text placeholder:text-text-muted focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed min-h-[36px] max-h-[120px] py-2 px-2"
+        />
+        <button
+          onClick={handleSubmit}
+          disabled={!value.trim() || disabled}
+          aria-label="Send message"
+          className="shrink-0 size-9 rounded-lg flex items-center justify-center bg-accent text-white transition-opacity disabled:opacity-40 hover:bg-accent-hover"
+        >
+          <Send className="size-4" />
+        </button>
+      </div>
+      <p className="text-[10px] text-text-muted text-center mt-2">
+        <span className="hidden sm:inline">
+          Press Enter to send, Shift+Enter for new line.{' '}
+        </span>
+        Responses are generated from mock data.
+      </p>
     </div>
   );
 }

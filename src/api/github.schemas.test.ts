@@ -1,7 +1,11 @@
-import { GithubProfileSchema, ContributionDaySchema, ContributionsSchema } from './github.schemas'
+import {
+  GithubProfileSchema,
+  ContributionDaySchema,
+  ContributionDataSchema,
+} from './github.schemas'
 
 describe('GithubProfileSchema', () => {
-  it('parses a valid profile', () => {
+  it('parses a valid profile with required fields only', () => {
     const result = GithubProfileSchema.safeParse({
       login: 'octocat',
       name: 'The Octocat',
@@ -25,6 +29,47 @@ describe('GithubProfileSchema', () => {
       following: 0,
     })
     expect(result.success).toBe(true)
+  })
+
+  it('parses optional fields when provided', () => {
+    const result = GithubProfileSchema.safeParse({
+      login: 'pedro',
+      name: 'Pedro',
+      avatarUrl: 'https://example.com/avatar.png',
+      bio: 'Engineer',
+      publicRepos: 10,
+      followers: 100,
+      following: 50,
+      stars: 7,
+      company: 'Vercel',
+      location: 'San Francisco',
+      pronouns: 'he/him',
+      createdAt: '2019-03-15T00:00:00Z',
+    })
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.stars).toBe(7)
+      expect(result.data.company).toBe('Vercel')
+    }
+  })
+
+  it('applies defaults for optional fields when omitted', () => {
+    const result = GithubProfileSchema.safeParse({
+      login: 'x',
+      name: 'X',
+      avatarUrl: 'https://example.com/a.png',
+      bio: null,
+      publicRepos: 0,
+      followers: 0,
+      following: 0,
+    })
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.stars).toBe(0)
+      expect(result.data.company).toBeNull()
+      expect(result.data.location).toBeNull()
+      expect(result.data.pronouns).toBeNull()
+    }
   })
 
   it('rejects an invalid avatar URL', () => {
@@ -68,14 +113,24 @@ describe('ContributionDaySchema', () => {
   })
 })
 
-describe('ContributionsSchema', () => {
-  it('parses an array of contribution days', () => {
-    const days = Array.from({ length: 365 }, (_, i) => ({
-      date: `2024-${String(Math.floor(i / 30) + 1).padStart(2, '0')}-${String((i % 28) + 1).padStart(2, '0')}`,
-      count: i % 10,
-      level: (i % 5) as 0 | 1 | 2 | 3 | 4,
-    }))
-    const result = ContributionsSchema.safeParse(days)
+describe('ContributionDataSchema', () => {
+  it('parses a valid weekly contribution structure', () => {
+    const week = {
+      days: Array.from({ length: 7 }, (_, i) => ({
+        date: `2024-03-${String(i + 1).padStart(2, '0')}`,
+        count: i,
+        level: Math.min(i, 4) as 0 | 1 | 2 | 3 | 4,
+      })),
+    }
+    const result = ContributionDataSchema.safeParse({
+      totalContributions: 21,
+      weeks: Array.from({ length: 52 }, () => week),
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('parses an empty weeks array', () => {
+    const result = ContributionDataSchema.safeParse({ totalContributions: 0, weeks: [] })
     expect(result.success).toBe(true)
   })
 })

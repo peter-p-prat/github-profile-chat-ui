@@ -3,11 +3,9 @@ import { vi } from 'vitest';
 import { useContributions } from './useContributions';
 import * as githubApi from '../api/github';
 import { createQueryWrapper } from '../test/queryWrapper';
+import { buildMockContributions } from '../lib/mocks';
 
-const MOCK_CONTRIBUTIONS = [
-  { date: '2024-03-15', count: 5, level: 2 as const },
-  { date: '2024-03-16', count: 0, level: 0 as const },
-];
+const MOCK_CONTRIBUTIONS = buildMockContributions();
 
 describe('useContributions', () => {
   it('returns isLoading true initially', () => {
