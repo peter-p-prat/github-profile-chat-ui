@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { isAssistantMessage, type Message } from '../../api/chat.types';
+import { isAssistantMessage, type Message } from '@/api/chat.types';
 import { MessageBubble } from './MessageBubble';
 import { TypingIndicator } from './TypingIndicator';
 

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
+import type { Message } from '@/api/chat.types';
 import { MessageList } from './MessageList';
-import type { Message } from '../../api/chat.types';
 
 const MESSAGES: Message[] = [
   { id: '1', role: 'user', content: 'First message', timestamp: new Date() },

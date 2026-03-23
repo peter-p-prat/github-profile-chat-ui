@@ -1,6 +1,6 @@
+import { buildMockContributions } from '@/lib/mocks';
 import type { GithubProfile, ContributionData } from './github.types';
 import { GithubProfileSchema, ContributionDataSchema } from './github.schemas';
-import { buildMockContributions } from '../lib/mocks';
 
 const MOCK_PROFILE: GithubProfile = {
   login: 'peter-p-prat',

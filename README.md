@@ -13,7 +13,8 @@ Opens at `http://localhost:5173`.
 
 ## What it does
 
-Desktop: a 35/65 split between the profile panel and the chat. Mobile: a tabbed layout with swipe gestures between panels — swipe left or right to switch tabs for a native-feeling experience.
+Desktop: a 35/65 split between the profile panel and the chat.
+Mobile: a tabbed layout with swipe gestures between panels — swipe left or right to switch tabs for a native-feeling experience.
 
 **Profile panel** — mocked GitHub user with avatar, bio, stats (repos, followers, stars, following), and a full contribution heatmap. Hover any cell to see an exact date and contribution count in a smart tooltip that repositions to stay within the viewport.
 

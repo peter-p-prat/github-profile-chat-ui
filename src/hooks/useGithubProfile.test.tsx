@@ -1,17 +1,23 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { useGithubProfile } from './useGithubProfile';
-import * as githubApi from '../api/github';
-import { createQueryWrapper } from '../test/queryWrapper';
+import * as githubApi from '@/api/github';
+import { createQueryWrapper } from '@/test/queryWrapper';
+import type { GithubProfile } from '@/api/github.types';
 
-const MOCK_PROFILE = {
-  login: 'octocat',
-  name: 'The Octocat',
-  avatarUrl: 'https://example.com/avatar.png',
-  bio: 'Hello world',
-  publicRepos: 8,
-  followers: 100,
-  following: 5,
+const MOCK_PROFILE: GithubProfile = {
+  login: 'peter-p-prat',
+  name: 'Pedro Peirano Prat',
+  avatarUrl: 'https://avatars.githubusercontent.com/u/62166899?v=4',
+  bio: 'Senior Frontend Engineer. Passionate about crafting clean, maintainable and understandable code that solves real-world problems.',
+  publicRepos: 14,
+  followers: 127,
+  following: 42,
+  stars: 7,
+  company: 'Vercel',
+  location: 'San Francisco, CA',
+  pronouns: 'he/him',
+  createdAt: '2019-03-15T00:00:00Z',
 };
 
 describe('useGithubProfile', () => {

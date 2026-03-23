@@ -1,9 +1,9 @@
-import { Github } from 'lucide-react'
-import { ProfileCard } from '../components/profile/ProfileCard'
-import { ContributionChart } from '../components/profile/ContributionChart'
-import { ChatPanel } from '../components/chat/ChatPanel'
-import { ThemeToggle } from '../components/ui/ThemeToggle'
-import { MobileTabNav } from '../components/MobileTabNav'
+import { Github } from 'lucide-react';
+import { ProfileCard } from '@/components/profile/ProfileCard';
+import { ContributionChart } from '@/components/profile/ContributionChart';
+import { ChatPanel } from '@/components/chat/ChatPanel';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { MobileTabNav } from '@/components/MobileTabNav';
 
 export function ProfilePage() {
   return (
@@ -12,7 +12,9 @@ export function ProfilePage() {
       <header className="flex items-center justify-between px-4 h-14 border-b border-border shrink-0">
         <div className="flex items-center gap-2">
           <Github className="size-6 text-text" />
-          <span className="font-semibold text-text hidden sm:inline">Profile Chat</span>
+          <span className="font-semibold text-text hidden sm:inline">
+            Profile Chat
+          </span>
         </div>
         <ThemeToggle />
       </header>
@@ -31,5 +33,5 @@ export function ProfilePage() {
         </section>
       </main>
     </div>
-  )
+  );
 }

@@ -1,10 +1,10 @@
 import { MessageSquare, Sparkles } from 'lucide-react';
-import { useContributions } from '../../hooks/useContributions';
-import { useGithubProfile } from '../../hooks/useGithubProfile';
-import { useChat } from '../../hooks/useChat';
+import { useContributions } from '@/hooks/useContributions';
+import { useGithubProfile } from '@/hooks/useGithubProfile';
+import { useChat } from '@/hooks/useChat';
+import { suggestedQuestions } from '@/api/chat';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
-import { suggestedQuestions } from '../../api/chat';
 
 const DISPLAY_QUESTIONS = suggestedQuestions.slice(0, 4);
 

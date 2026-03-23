@@ -1,5 +1,5 @@
-import { formatDate } from '../../lib/dates';
-import { Tooltip } from '../ui/Tooltip';
+import { formatDate } from '@/lib/dates';
+import { Tooltip } from '@/components/ui/Tooltip';
 
 interface ContributionTooltipProps {
   date: string;

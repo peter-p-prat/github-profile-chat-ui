@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
+import * as contributionsHook from '@/hooks/useContributions';
+import * as profileHook from '@/hooks/useGithubProfile';
+import * as chatHook from '@/hooks/useChat';
+import type { ContributionData } from '@/api/github.types';
 import { ChatPanel } from './ChatPanel';
-import * as contributionsHook from '../../hooks/useContributions';
-import * as profileHook from '../../hooks/useGithubProfile';
-import * as chatHook from '../../hooks/useChat';
-import type { ContributionData } from '../../api/github.types';
 
 const MOCK_CONTRIBUTIONS: ContributionData = {
   totalContributions: 0,

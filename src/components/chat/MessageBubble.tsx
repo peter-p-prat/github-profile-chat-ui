@@ -1,24 +1,28 @@
-import { useState } from 'react'
-import { Check, Copy, RefreshCw, Sparkles, User } from 'lucide-react'
-import type { Message } from '../../api/chat.types'
-import { isUserMessage } from '../../api/chat.types'
-import { formatMessageContent } from '../../lib/messageFormatting'
+import { useState } from 'react';
+import { Check, Copy, RefreshCw, Sparkles, User } from 'lucide-react';
+import type { Message } from '@/api/chat.types';
+import { isUserMessage } from '@/api/chat.types';
+import { formatMessageContent } from '@/lib/messageFormatting';
 
 interface MessageBubbleProps {
-  message: Message
-  onRegenerate?: () => void
-  isLatestAssistant?: boolean
+  message: Message;
+  onRegenerate?: () => void;
+  isLatestAssistant?: boolean;
 }
 
-export function MessageBubble({ message, onRegenerate, isLatestAssistant }: MessageBubbleProps) {
-  const [copied, setCopied] = useState(false)
-  const isUser = isUserMessage(message)
+export function MessageBubble({
+  message,
+  onRegenerate,
+  isLatestAssistant,
+}: MessageBubbleProps) {
+  const [copied, setCopied] = useState(false);
+  const isUser = isUserMessage(message);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(message.content)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+    await navigator.clipboard.writeText(message.content);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div
@@ -27,9 +31,7 @@ export function MessageBubble({ message, onRegenerate, isLatestAssistant }: Mess
       {/* Avatar */}
       <div
         className={`size-8 shrink-0 rounded-full ring-1 flex items-center justify-center ${
-          isUser
-            ? 'ring-border bg-surface-2'
-            : 'ring-accent/20 bg-accent/10'
+          isUser ? 'ring-border bg-surface-2' : 'ring-accent/20 bg-accent/10'
         }`}
       >
         {isUser ? (
@@ -61,7 +63,11 @@ export function MessageBubble({ message, onRegenerate, isLatestAssistant }: Mess
               aria-label={copied ? 'Copied' : 'Copy message'}
               className="flex items-center justify-center size-7 rounded-md text-text-muted hover:text-text hover:bg-surface transition-colors"
             >
-              {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+              {copied ? (
+                <Check className="size-3.5" />
+              ) : (
+                <Copy className="size-3.5" />
+              )}
             </button>
 
             {isLatestAssistant && onRegenerate && (
@@ -77,5 +83,5 @@ export function MessageBubble({ message, onRegenerate, isLatestAssistant }: Mess
         )}
       </div>
     </div>
-  )
+  );
 }

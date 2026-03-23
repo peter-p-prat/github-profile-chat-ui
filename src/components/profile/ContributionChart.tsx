@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
 import clsx from 'clsx';
-import { useContributions } from '../../hooks/useContributions';
-import type { ContributionDay } from '../../api/github.types';
-import { Skeleton } from '../ui/Skeleton';
+import { useContributions } from '@/hooks/useContributions';
+import type { ContributionDay } from '@/api/github.types';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { ContributionTooltip } from './ContributionTooltip';
 
 const MONTHS = [

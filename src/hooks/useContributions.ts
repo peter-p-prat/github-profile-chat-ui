@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchContributions } from '../api/github';
-import { githubKeys } from '../api/github.keys';
+import { fetchContributions } from '@/api/github';
+import { githubKeys } from '@/api/github.keys';
 
 export function useContributions() {
   return useQuery({

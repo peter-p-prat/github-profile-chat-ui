@@ -1,9 +1,9 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
+import * as githubApi from '@/api/github';
+import { createQueryWrapper } from '@/test/queryWrapper';
+import { buildMockContributions } from '@/lib/mocks';
 import { useContributions } from './useContributions';
-import * as githubApi from '../api/github';
-import { createQueryWrapper } from '../test/queryWrapper';
-import { buildMockContributions } from '../lib/mocks';
 
 const MOCK_CONTRIBUTIONS = buildMockContributions();
 

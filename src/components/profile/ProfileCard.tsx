@@ -1,15 +1,22 @@
-import { Building2, ExternalLink, GitFork, MapPin, Star, Users } from 'lucide-react'
-import { useGithubProfile } from '../../hooks/useGithubProfile'
-import { Skeleton } from '../ui/Skeleton'
+import {
+  Building2,
+  ExternalLink,
+  GitFork,
+  MapPin,
+  Star,
+  Users,
+} from 'lucide-react';
+import { useGithubProfile } from '@/hooks/useGithubProfile';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 function StatItem({
   icon: Icon,
   label,
   value,
 }: {
-  icon: React.ElementType
-  label: string
-  value: number
+  icon: React.ElementType;
+  label: string;
+  value: number;
 }) {
   return (
     <div className="flex items-center gap-2 text-sm">
@@ -17,11 +24,11 @@ function StatItem({
       <span className="font-semibold text-text">{value.toLocaleString()}</span>
       <span className="text-text-muted">{label}</span>
     </div>
-  )
+  );
 }
 
 export function ProfileCard() {
-  const { data, isLoading, isError } = useGithubProfile()
+  const { data, isLoading, isError } = useGithubProfile();
 
   if (isLoading) {
     return (
@@ -42,7 +49,7 @@ export function ProfileCard() {
           <Skeleton width="100%" height={20} />
         </div>
       </div>
-    )
+    );
   }
 
   if (isError || !data) {
@@ -50,7 +57,7 @@ export function ProfileCard() {
       <div className="p-6 text-center text-text-muted">
         <p>Failed to load profile. Please try again.</p>
       </div>
-    )
+    );
   }
 
   const initials = data.name
@@ -58,7 +65,7 @@ export function ProfileCard() {
     .map((n) => n[0])
     .join('')
     .toUpperCase()
-    .slice(0, 2)
+    .slice(0, 2);
 
   return (
     <div className="flex flex-col">
@@ -81,7 +88,9 @@ export function ProfileCard() {
           )}
 
           <div className="flex-1 min-w-0">
-            <h1 className="text-xl font-semibold text-text truncate">{data.name}</h1>
+            <h1 className="text-xl font-semibold text-text truncate">
+              {data.name}
+            </h1>
             <div className="flex items-center gap-2 mt-0.5 flex-wrap">
               <span className="text-text-muted text-sm">@{data.login}</span>
               {data.pronouns && (
@@ -140,5 +149,5 @@ export function ProfileCard() {
         </a>
       </div>
     </div>
-  )
+  );
 }
